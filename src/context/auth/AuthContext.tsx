@@ -12,7 +12,7 @@ type AuthContextProps = {
 // TODO
 const authInitialState: AuthState = {
     user: {
-        "id": 4104,
+        "id": 12318,
         "name": "Juan Tavárez",
         "email": "juan.tavarez@example.com",
         "gender": "male",
