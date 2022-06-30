@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { User } from '../../interfaces/users';
+import Swal from 'sweetalert2';
 import http from '../../api/http';
 
 const formValidations = {
@@ -40,7 +41,8 @@ export const Register = () => {
       setUser(data)
     } catch (error: any) {
       console.log(error.response.data)
-      console.log('An error ocurred. Please try again later.')
+      const { field, message } = error.response.data[0]
+      Swal.fire({ title: 'Error', text: `${field} ${message}.`, icon: 'error', confirmButtonColor: '#ee4865' })
     }
   }
 
