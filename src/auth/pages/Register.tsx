@@ -40,7 +40,6 @@ export const Register = () => {
 
       setUser(data)
     } catch (error: any) {
-      console.log(error.response.data)
       const { field, message } = error.response.data[0]
       Swal.fire({ title: 'Error', text: `${field} ${message}.`, icon: 'error', confirmButtonColor: '#ee4865' })
     }
