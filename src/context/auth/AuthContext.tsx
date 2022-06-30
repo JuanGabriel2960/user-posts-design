@@ -9,16 +9,9 @@ type AuthContextProps = {
     removeUser: () => void;
 }
 
-// TODO
 const authInitialState: AuthState = {
-    user: {
-        "id": 12318,
-        "name": "Juan Tavárez",
-        "email": "juan.tavarez@example.com",
-        "gender": "male",
-        "status": "active"
-    },
-    status: 'authenticated',
+    user: null,
+    status: 'unauthenticated',
 }
 
 export const AuthContext = createContext({} as AuthContextProps)
