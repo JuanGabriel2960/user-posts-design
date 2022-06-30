@@ -14,13 +14,18 @@ export const Navigation = () => {
                     {
                         (status !== 'authenticated')
                             ? (
-                                <Route path='/auth/*' element={<AuthModule />} />
+                                <>
+                                    <Route path='/auth/*' element={<AuthModule />} />
+                                    <Route path='/*' element={<Navigate to='/auth' />} />
+                                </>
                             )
                             : (
-                                <Route path='/user/*' element={<UserModule />} />
+                                <>
+                                    <Route path='/user/*' element={<UserModule />} />
+                                    <Route path='/*' element={<Navigate to='/user' />} />
+                                </>
                             )
                     }
-                    <Route path='/*' element={<Navigate to='/auth/*' />} />
                 </Routes>
             </BrowserRouter>
         </Suspense>

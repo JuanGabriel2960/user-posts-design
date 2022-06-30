@@ -5,6 +5,7 @@ import { authReducer, AuthState } from './AuthReducer';
 type AuthContextProps = {
     user: User | null;
     status: 'authenticated' | 'unauthenticated';
+    setUser: (user: User) => void;
     removeUser: () => void;
 }
 
@@ -19,6 +20,15 @@ export const AuthProvider = ({ children }: any) => {
 
     const [state, dispatch] = useReducer(authReducer, authInitialState)
 
+    const setUser = (user: User) => {
+        dispatch({
+            type: 'setUser',
+            payload: {
+                user
+            }
+        })
+    };
+
     const removeUser = () => {
         dispatch({ type: 'removeUser' });
     };
@@ -26,6 +36,7 @@ export const AuthProvider = ({ children }: any) => {
     return (
         <AuthContext.Provider value={{
             ...state,
+            setUser,
             removeUser,
         }}>
             {children}
