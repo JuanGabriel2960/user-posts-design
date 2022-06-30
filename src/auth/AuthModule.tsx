@@ -3,14 +3,18 @@ import * as Pages from './pages';
 
 const AuthModule = () => {
     return (
-        <>
-            <Routes>
-                <Route path="/login" element={<Pages.Login />} />
-                <Route path="/register" element={<Pages.Register />} />
+        <div className="w-screen h-screen flex flex-col xl:flex-row">
+            <div className="bg-accent w-full h-1/2 flex flex-col justify-center items-center xl:w-1/2 xl:h-full">
+            </div>
+            <div className="w-full h-1/2 flex flex-col justify-center xl:w-1/2 xl:h-full">
+                <Routes>
+                    <Route path="/login" element={<Pages.Login />} />
+                    <Route path="/register" element={<Pages.Register />} />
 
-                <Route path="*" element={<Navigate to="login" replace />} />
-            </Routes>
-        </>
+                    <Route path="*" element={<Navigate to="login" replace />} />
+                </Routes>
+            </div>
+        </div>
     )
 }
 
