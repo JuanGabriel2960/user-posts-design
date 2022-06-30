@@ -12,8 +12,10 @@ export const CardBody = ({ body, className, style }: Props) => {
     const { post } = useContext(CardContext)
 
     return (
-        <p className={`text-font-light font-light h-60 text-lg lg:text-xl mb-4 ${className}`} style={style}>
-            {body ? body : post.body}
-        </p>
+        <div className='h-60 mb-1'>
+            <p className={`text-font-light font-light text-lg lg:text-xl ${className}`} style={style}>
+                {body ? body : post.body}
+            </p>
+        </div>
     );
 }
