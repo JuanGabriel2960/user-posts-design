@@ -7,7 +7,7 @@ interface Props {
 export const Container = ({ children }: Props) => {
     return (
         <div className='bg-secondary min-h-screen py-6 px-6 lg:py-12 lg:px-12'>
-            <div className='container mx-auto'>
+            <div className='container mx-auto max-w-screen-xl'>
                 {children}
             </div>
         </div>

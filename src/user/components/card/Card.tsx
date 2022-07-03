@@ -14,7 +14,7 @@ export interface Props {
 }
 
 export const Card = ({ children, post, summary = true, className, style }: Props) => {
-    if (summary == false) {
+    if (summary === false) {
         return (
             <Provider value={{ post }}>
                 <div className={`${className}`} style={style}>

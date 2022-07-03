@@ -47,7 +47,7 @@ export const Post = () => {
 
     return (
         <div>
-            <div className='flex justify-between items-center mb-9 lg:mb-11'>
+            <div className='flex justify-between items-center mb-10 lg:mb-16'>
                 <NavLink to='/user/post'>back</NavLink>
                 <button onClick={handleDelete} className='bg-white border font-bold text-font-light rounded-xl w-16 h-14'>x</button>
             </div>
@@ -56,7 +56,7 @@ export const Post = () => {
                 (post)
                     ? (
                         <Card key={post.id} post={post} summary={false}>
-                            <CardTitle className='text-4xl md:text-5xl lg:text-6xl mb-9 lg:mb-11' />
+                            <CardTitle className='text-4xl md:text-5xl lg:text-6xl mb-10 lg:mb-11' />
                             <CardBody className='text-2xl md:text-3xl leading-normal' />
                         </Card>
                     )
