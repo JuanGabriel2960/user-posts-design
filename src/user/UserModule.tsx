@@ -9,6 +9,7 @@ const UserModule = () => {
             <PostsProvider>
                 <Routes>
                     <Route path="/posts" element={<Pages.Posts />} />
+                    <Route path="/posts/:id" element={<Pages.Post />} />
 
                     <Route path="*" element={<Navigate to="posts" replace />} />
                 </Routes>

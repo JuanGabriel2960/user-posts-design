@@ -13,4 +13,5 @@ export interface CardHOCProps {
 
 export interface CardContextProps {
     post: Post;
+    summary?: boolean;
 }

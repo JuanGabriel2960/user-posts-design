@@ -16,8 +16,8 @@ export const Posts = () => {
         {
           posts.map(post => (
             <Card key={post.id} post={post}>
-              <CardTitle />
-              <CardBody style={{ display: '-webkit-box', WebkitLineClamp: 8, WebkitBoxOrient: 'vertical', overflow: 'hidden' }} />
+              <CardTitle className='lg:text-3xl mb-4' />
+              <CardBody className='text-xl lg:text-2xl' />
               <CardButton />
             </Card>
           ))

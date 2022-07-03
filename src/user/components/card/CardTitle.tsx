@@ -9,10 +9,10 @@ export interface Props {
 
 export const CardTitle = ({ title, className, style }: Props) => {
 
-    const { post } = useContext(CardContext)
+    const { post, summary } = useContext(CardContext)
 
     return (
-        <h5 className={`text-font-strong font-bold lg:text-3xl mb-4 whitespace-nowrap overflow-hidden text-ellipsis ${className}`} style={style}>
+        <h5 className={`text-font-strong font-bold ${summary && 'whitespace-nowrap overflow-hidden text-ellipsis'} ${className}`} style={style}>
             {title ? title : post.title}
         </h5>
     );
