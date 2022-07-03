@@ -9,7 +9,7 @@ export const Posts = () => {
 
   return (
     <div>
-      <h1 className='font-bold text-3xl lg:text-4xl'>Posts</h1>
+      <h1 className='text-font-strong font-bold text-3xl lg:text-4xl'>Posts</h1>
       <Filters />
 
       <div className='flex flex-wrap justify-center gap-4 md:gap-6 lg:gap-10'>

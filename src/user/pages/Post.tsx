@@ -3,7 +3,10 @@ import { useContext, useEffect, useState } from 'react';
 import { PostsContext } from '../../context/posts/PostsContext';
 import { Post as PostInterface } from '../../interfaces/posts';
 import { Card, CardTitle, CardBody } from '../components/card';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 import Swal from 'sweetalert2';
+import { IconButton } from '../components/IconButton';
 
 export const Post = () => {
 
@@ -48,8 +51,12 @@ export const Post = () => {
     return (
         <div>
             <div className='flex justify-between items-center mb-10 lg:mb-16'>
-                <NavLink to='/user/post'>back</NavLink>
-                <button onClick={handleDelete} className='bg-white border font-bold text-font-light rounded-xl w-16 h-14'>x</button>
+                <NavLink to='/user/post'>
+                    <FontAwesomeIcon icon={faAngleLeft} className='text-font-light h-9 lg:h-11' />
+                </NavLink>
+                <IconButton onClick={handleDelete}>
+                    <FontAwesomeIcon icon={faTrash} className='h-5 lg:h-6' />
+                </IconButton>
             </div>
 
             {
