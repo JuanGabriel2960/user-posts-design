@@ -7,6 +7,8 @@ import { User } from '../../interfaces/users';
 type PostsContextProps = {
     posts: Post[];
     getPosts: () => Promise<void>;
+    getPostById: (id: string) => Promise<Post>;
+    deletePostById: (id: string) => Promise<void>;
 }
 
 export const PostsContext = createContext({} as PostsContextProps);
@@ -32,10 +34,32 @@ export const PostsProvider = ({ children }: any) => {
         setPosts([...resp.data]);
     }
 
+    const getPostById = async (id: string) => {
+        const resp = await http.get<Post>(`/posts/${id}`, {
+            headers: {
+                Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
+            }
+        });
+
+        return resp.data;
+    };
+
+    const deletePostById = async (id: string) => {
+        await http.delete(`/posts/${id}`, {
+            headers: {
+                Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
+            }
+        });
+
+        getPosts()
+    };
+
     return (
         <PostsContext.Provider value={{
             posts,
-            getPosts
+            getPosts,
+            getPostById,
+            deletePostById
         }}>
             {children}
         </PostsContext.Provider>

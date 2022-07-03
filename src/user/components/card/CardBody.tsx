@@ -4,16 +4,15 @@ import { CardContext } from './Card';
 export interface Props {
     body?: string;
     className?: string;
-    style?: React.CSSProperties;
 }
 
-export const CardBody = ({ body, className, style }: Props) => {
+export const CardBody = ({ body, className }: Props) => {
 
-    const { post } = useContext(CardContext)
+    const { post, summary } = useContext(CardContext)
 
     return (
-        <div className='h-60 mb-1'>
-            <p className={`text-font-light font-light text-lg lg:text-xl ${className}`} style={style}>
+        <div className='h-56 lg:h-60 lg:mb-2'>
+            <p className={`text-font-light font-light ${className}`} style={summary ? { display: '-webkit-box', WebkitLineClamp: 7, WebkitBoxOrient: 'vertical', overflow: 'hidden' } : {}}>
                 {body ? body : post.body}
             </p>
         </div>
