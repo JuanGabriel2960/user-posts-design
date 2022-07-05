@@ -2,9 +2,7 @@ import { FormEvent, useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 import { AuthContext } from '../../context/auth/AuthContext';
-import { User } from '../../interfaces/users';
-import Swal from 'sweetalert2';
-import http from '../../api/http';
+import { AuthButton } from '../components/AuthButton';
 
 const formValidations = {
   name: [(value: string) => value.length >= 1, 'The name is required'],
@@ -15,8 +13,7 @@ const formValidations = {
 export const Register = () => {
 
   const [formSubmitted, setFormSubmitted] = useState(false)
-
-  const { setUser } = useContext(AuthContext);
+  const { signUp } = useContext(AuthContext);
 
   const { name, gender, email, status, onChange, isFormValid, nameValid, genderValid, emailValid, } = useForm({
     name: '',
@@ -31,18 +28,7 @@ export const Register = () => {
 
     if (!isFormValid) return;
 
-    try {
-      const { data } = await http.post<User>('/users', { name, gender, email, status }, {
-        headers: {
-          Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
-        }
-      })
-
-      setUser(data)
-    } catch (error: any) {
-      const { field, message } = error.response.data[0]
-      Swal.fire({ title: 'Error', text: `${field} ${message}.`, icon: 'error', confirmButtonColor: '#ee4865' })
-    }
+    signUp({ name, gender, email, status })
   }
 
   return (
@@ -76,8 +62,7 @@ export const Register = () => {
           </div>
           <span className="text-red-400 text-xl">{formSubmitted && genderValid}</span>
         </div >
-        <button
-          className="bg-accent text-white mt-10 py-5 font-bold rounded-lg w-full md:py-6 md:mt-14">Sign up</button>
+        <AuthButton text='Sign up' />
         <p className="text-font-light mt-5 text-2xl max-w-md mx-auto text-center md:mt-7">Already have an account? <NavLink to='/auth/login'><span className='text-accent font-medium'>Sign in</span></NavLink></p>
       </form >
     </div >

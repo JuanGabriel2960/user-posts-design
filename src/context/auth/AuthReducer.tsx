@@ -2,12 +2,13 @@ import { User } from "../../interfaces/users";
 
 export interface AuthState {
     user: User | null;
-    status: 'authenticated' | 'unauthenticated';
+    status: 'authenticated' | 'unauthenticated' | 'checking';
 }
 
 type AuthAction =
     | { type: 'setUser', payload: { user: User } }
     | { type: 'removeUser' }
+    | { type: 'checkUser' }
 
 export const authReducer = (state: AuthState, action: AuthAction): AuthState => {
     switch (action.type) {
@@ -23,6 +24,12 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
                 ...state,
                 user: null,
                 status: 'unauthenticated'
+            }
+
+        case 'checkUser':
+            return {
+                ...state,
+                status: 'checking'
             }
 
         default:
