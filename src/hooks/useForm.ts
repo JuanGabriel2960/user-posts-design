@@ -29,18 +29,23 @@ export const useForm = <T extends Object>(initState: T, formValidations: any = {
         const formCheckedValues: any = {}
 
         for (const formField of Object.keys(formValidations)) {
-            const [functionxd, errorMessage] = formValidations[formField]
+            const [funct, errorMessage] = formValidations[formField]
 
-            formCheckedValues[`${formField}Valid`] = functionxd(formState[formField]) ? null : errorMessage;
+            formCheckedValues[`${formField}Valid`] = funct(formState[formField]) ? null : errorMessage;
         }
 
         setFormValidation(formCheckedValues)
+    }
+
+    const resetForm = () => {
+        setFormState(initState);
     }
 
     return {
         ...formState,
         onChange,
         ...formValidation,
-        isFormValid
+        isFormValid,
+        resetForm
     }
 }

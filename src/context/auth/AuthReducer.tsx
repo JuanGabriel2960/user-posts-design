@@ -8,6 +8,7 @@ export interface AuthState {
 type AuthAction =
     | { type: 'setUser', payload: { user: User } }
     | { type: 'removeUser' }
+    | { type: 'checkUser' }
 
 export const authReducer = (state: AuthState, action: AuthAction): AuthState => {
     switch (action.type) {

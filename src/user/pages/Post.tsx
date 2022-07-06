@@ -52,7 +52,7 @@ export const Post = () => {
         <div>
             <div className='flex justify-between items-center mb-10 lg:mb-16'>
                 <NavLink to='/user/post'>
-                    <FontAwesomeIcon icon={faAngleLeft} className='text-font-light h-9 lg:h-11' />
+                    <FontAwesomeIcon icon={faAngleLeft} className='text-font-strong h-9 lg:h-11' />
                 </NavLink>
                 <IconButton onClick={handleDelete}>
                     <FontAwesomeIcon icon={faTrash} className='h-5 lg:h-6' />
