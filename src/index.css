@@ -54,6 +54,10 @@ textarea {
   resize: none;
 }
 
+.no-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 .swal2-popup .swal2-styled:focus {
   box-shadow: none !important;
 }

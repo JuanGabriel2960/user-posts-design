@@ -5,6 +5,7 @@ import { AuthContext } from '../auth/AuthContext';
 import { User } from '../../interfaces/users';
 import Swal from 'sweetalert2';
 import { useModal } from '../../hooks/useModal';
+import { useLoading } from '../../hooks/useLoading';
 
 type PostsContextProps = {
     posts: Post[];
@@ -15,6 +16,7 @@ type PostsContextProps = {
     isFormOpen: boolean;
     openModal: () => void;
     closeModal: () => void;
+    isButtonLoading: boolean;
 }
 
 export const PostsContext = createContext({} as PostsContextProps);
@@ -22,8 +24,9 @@ export const PostsContext = createContext({} as PostsContextProps);
 export const PostsProvider = ({ children }: any) => {
 
     const [posts, setPosts] = useState<Post[]>([]);
-    const { isOpen: isFormOpen, openModal, closeModal } = useModal()
     const { user } = useContext(AuthContext);
+    const { isOpen: isFormOpen, openModal, closeModal } = useModal()
+    const { isLoading: isButtonLoading, startLoading, stopLoading } = useLoading()
 
     useEffect(() => {
         getPosts();
@@ -65,6 +68,8 @@ export const PostsProvider = ({ children }: any) => {
         const { id } = user as User;
 
         try {
+            startLoading()
+
             const resp = await http.post<Post>(`/users/${id}/posts`, { title, body }, {
                 headers: {
                     Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
@@ -76,6 +81,8 @@ export const PostsProvider = ({ children }: any) => {
             const { field, message } = error.response.data[0]
             Swal.fire({ title: 'Error', text: `${field} ${message}.`, icon: 'error', confirmButtonColor: '#ee4865' })
         }
+
+        stopLoading()
     };
 
     return (
@@ -87,7 +94,8 @@ export const PostsProvider = ({ children }: any) => {
             addPost,
             isFormOpen,
             openModal,
-            closeModal
+            closeModal,
+            isButtonLoading
         }}>
             {children}
         </PostsContext.Provider>

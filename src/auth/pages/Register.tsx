@@ -2,20 +2,21 @@ import { FormEvent, useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 import { AuthContext } from '../../context/auth/AuthContext';
-import { AuthButton } from '../components/AuthButton';
+import { LoadingButton } from '../../components/LoadingButton';
+import { emailRegex } from '../../utils';
 
 const formValidations = {
   name: [(value: string) => value.length >= 1, 'The name is required'],
   gender: [(value: string) => value === 'male' || value === 'female', 'The gender is required'],
-  email: [(value: string) => /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value), 'The email is not valid'],
+  email: [(value: string) => emailRegex.test(value), 'The email is not valid'],
 }
 
 export const Register = () => {
 
   const [formSubmitted, setFormSubmitted] = useState(false)
-  const { signUp } = useContext(AuthContext);
+  const { signUp, isButtonLoading } = useContext(AuthContext);
 
-  const { name, gender, email, status, onChange, isFormValid, nameValid, genderValid, emailValid, } = useForm({
+  const { name, gender, email, status, onChange, isFormValid, nameValid, genderValid, emailValid } = useForm({
     name: '',
     gender: '',
     email: '',
@@ -62,7 +63,7 @@ export const Register = () => {
           </div>
           <span className="text-red-400 text-xl">{formSubmitted && genderValid}</span>
         </div >
-        <AuthButton text='Sign up' />
+        <LoadingButton text='Sign up' isLoading={isButtonLoading} />
         <p className="text-font-light mt-5 text-2xl max-w-md mx-auto text-center md:mt-7">Already have an account? <NavLink to='/auth/login'><span className='text-accent font-medium'>Sign in</span></NavLink></p>
       </form >
     </div >

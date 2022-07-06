@@ -2,18 +2,19 @@ import { FormEvent, useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 import { AuthContext } from '../../context/auth/AuthContext';
-import { AuthButton } from '../components/AuthButton';
+import { LoadingButton } from '../../components/LoadingButton';
+import { emailRegex } from '../../utils';
 
 const formValidations = {
-  email: [(value: string) => /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value), 'The email is not valid'],
+  email: [(value: string) => emailRegex.test(value), 'The email is not valid'],
 }
 
 export const Login = () => {
 
   const [formSubmitted, setFormSubmitted] = useState(false)
-  const { signIn } = useContext(AuthContext);
+  const { signIn, isButtonLoading } = useContext(AuthContext);
 
-  const { email, onChange, isFormValid, emailValid, } = useForm({
+  const { email, onChange, isFormValid, emailValid } = useForm({
     email: '',
   }, formValidations)
 
@@ -40,7 +41,7 @@ export const Login = () => {
           </div>
           <span className="text-red-400 text-xl">{formSubmitted && emailValid}</span>
         </div >
-        <AuthButton text='Sign in' />
+        <LoadingButton text='Sign in' isLoading={isButtonLoading} />
         <p className="text-font-light mt-5 text-2xl max-w-md mx-auto text-center md:mt-7">Don't have an account yet? <NavLink to='/auth/register'><span className='text-accent font-medium'>Sign up</span></NavLink></p>
       </form >
     </div >

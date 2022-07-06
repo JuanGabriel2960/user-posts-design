@@ -2,7 +2,7 @@ import { User } from "../../interfaces/users";
 
 export interface AuthState {
     user: User | null;
-    status: 'authenticated' | 'unauthenticated' | 'checking';
+    status: 'authenticated' | 'unauthenticated';
 }
 
 type AuthAction =
@@ -24,12 +24,6 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
                 ...state,
                 user: null,
                 status: 'unauthenticated'
-            }
-
-        case 'checkUser':
-            return {
-                ...state,
-                status: 'checking'
             }
 
         default:
