@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { PostsContext } from '../../context/posts/PostsContext';
 import { Card, CardTitle, CardBody, CardButton } from '../components/card';
 import { Filters } from '../components/Filters';
+import { PostForm } from '../components/PostForm';
 
 export const Posts = () => {
 
@@ -23,6 +24,8 @@ export const Posts = () => {
           ))
         }
       </div>
+
+      <PostForm />
     </div>
   )
 }

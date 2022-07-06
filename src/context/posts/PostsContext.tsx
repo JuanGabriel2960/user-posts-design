@@ -1,14 +1,20 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import { Post } from '../../interfaces/posts';
+import { CreatePost, Post } from '../../interfaces/posts';
 import http from '../../api/http';
 import { AuthContext } from '../auth/AuthContext';
 import { User } from '../../interfaces/users';
+import Swal from 'sweetalert2';
+import { useModal } from '../../hooks/useModal';
 
 type PostsContextProps = {
     posts: Post[];
     getPosts: () => Promise<void>;
     getPostById: (id: string) => Promise<Post>;
     deletePostById: (id: string) => Promise<void>;
+    addPost: (formData: CreatePost) => Promise<void>;
+    isFormOpen: boolean;
+    openModal: () => void;
+    closeModal: () => void;
 }
 
 export const PostsContext = createContext({} as PostsContextProps);
@@ -16,6 +22,7 @@ export const PostsContext = createContext({} as PostsContextProps);
 export const PostsProvider = ({ children }: any) => {
 
     const [posts, setPosts] = useState<Post[]>([]);
+    const { isOpen: isFormOpen, openModal, closeModal } = useModal()
     const { user } = useContext(AuthContext);
 
     useEffect(() => {
@@ -54,12 +61,33 @@ export const PostsProvider = ({ children }: any) => {
         getPosts()
     };
 
+    const addPost = async ({ title, body }: CreatePost) => {
+        const { id } = user as User;
+
+        try {
+            const resp = await http.post<Post>(`/users/${id}/posts`, { title, body }, {
+                headers: {
+                    Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
+                }
+            });
+
+            setPosts([...posts, resp.data]);
+        } catch (error: any) {
+            const { field, message } = error.response.data[0]
+            Swal.fire({ title: 'Error', text: `${field} ${message}.`, icon: 'error', confirmButtonColor: '#ee4865' })
+        }
+    };
+
     return (
         <PostsContext.Provider value={{
             posts,
             getPosts,
             getPostById,
-            deletePostById
+            deletePostById,
+            addPost,
+            isFormOpen,
+            openModal,
+            closeModal
         }}>
             {children}
         </PostsContext.Provider>
