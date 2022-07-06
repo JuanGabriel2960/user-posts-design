@@ -1,24 +1,23 @@
-import { NavLink, useParams, useNavigate } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { PostsContext } from '../../context/posts/PostsContext';
 import { Post as PostInterface } from '../../interfaces/posts';
 import { Card, CardTitle, CardBody } from '../components/card';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
-import Swal from 'sweetalert2';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import { IconButton } from '../components/IconButton';
+import Swal from 'sweetalert2';
 
 export const Post = () => {
 
     const { id = '' } = useParams();
     const { getPostById, deletePostById } = useContext(PostsContext);
-    const navigate = useNavigate();
 
-    const [post, setPost] = useState<PostInterface | null>()
+    const [selectedPost, setSelectedPost] = useState<PostInterface | null>();
 
     useEffect(() => {
         getPostById(id)
-            .then(setPost)
+            .then(setSelectedPost)
     }, [])
 
     const handleDelete = () => {
@@ -34,16 +33,7 @@ export const Post = () => {
             reverseButtons: true,
         }).then(result => {
             if (result.isConfirmed) {
-                deletePostById(id)
-                    .then(() => {
-                        Swal.fire({ title: 'Deleted', text: 'Post deleted successfully.', icon: 'success', confirmButtonColor: '#ee4865' })
-                            .then(() => {
-                                return navigate('/user/post');
-                            });
-                    })
-                    .catch(() => {
-                        Swal.fire({ title: 'Error', text: 'Error deleting post.', icon: 'error', confirmButtonColor: '#ee4865' })
-                    })
+                deletePostById(parseInt(id))
             }
         });
     }
@@ -60,9 +50,9 @@ export const Post = () => {
             </div>
 
             {
-                (post)
+                (selectedPost)
                     ? (
-                        <Card key={post.id} post={post} summary={false}>
+                        <Card key={selectedPost.id} post={selectedPost} summary={false}>
                             <CardTitle className='text-4xl md:text-5xl lg:text-6xl mb-10 lg:mb-11' />
                             <CardBody className='text-2xl md:text-3xl leading-normal' />
                         </Card>
