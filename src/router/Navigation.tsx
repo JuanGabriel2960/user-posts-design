@@ -2,13 +2,14 @@ import { Suspense, useContext } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthModule, UserModule } from './routes';
 import { AuthContext } from '../context/auth/AuthContext';
+import { ModuleLoader } from '../components/ModuleLoader';
 
 export const Navigation = () => {
 
     const { status } = useContext(AuthContext);
 
     return (
-        <Suspense fallback={<span>Loading...</span>}>
+        <Suspense fallback={<ModuleLoader />}>
             <BrowserRouter>
                 <Routes>
                     {
