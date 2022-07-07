@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
-import { CreatePost, Post, searchParameters } from '../../interfaces/posts';
+import { CreatePost, Post, searchParameters, sortBy } from '../../interfaces/posts';
 import http from '../../api/http';
 import { AuthContext } from '../auth/AuthContext';
 import { User } from '../../interfaces/users';
@@ -11,10 +11,12 @@ import { useNavigate } from 'react-router-dom';
 
 type PostsContextProps = {
     posts: Post[];
+    sortBy: sortBy;
     getPosts: (searchParameters?: searchParameters) => Promise<void>;
     getPostById: (id: string) => Promise<Post>;
     addPost: (formData: CreatePost) => Promise<void>;
     deletePostById: (id: number) => Promise<void>;
+    changeSortBy: (sortBy: sortBy) => void;
     isFormOpen: boolean;
     openModal: () => void;
     closeModal: () => void;
@@ -23,6 +25,7 @@ type PostsContextProps = {
 
 const postsInitialState: PostsState = {
     posts: [],
+    sortBy: sortBy.DESC
 }
 
 export const PostsContext = createContext({} as PostsContextProps);
@@ -40,10 +43,10 @@ export const PostsProvider = ({ children }: any) => {
         getPosts();
     }, [])
 
-    const getPosts = async (searchParameters: searchParameters = { title: '' }) => {
+    const getPosts = async (searchParameters: searchParameters = { title: '', body: '' }) => {
         const { id } = user as User;
 
-        const resp = await http.get<Post[]>(`/users/${id}/posts?title=${searchParameters.title}`, {
+        const resp = await http.get<Post[]>(`/users/${id}/posts?title=${searchParameters.title}&body=${searchParameters.body}`, {
             headers: {
                 Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
             }
@@ -117,6 +120,15 @@ export const PostsProvider = ({ children }: any) => {
         }
     };
 
+    const changeSortBy = (sortBy: sortBy) => {
+        dispatch({
+            type: 'changeSortBy',
+            payload: {
+                sortBy
+            }
+        })
+    }
+
     return (
         <PostsContext.Provider value={{
             ...state,
@@ -124,6 +136,7 @@ export const PostsProvider = ({ children }: any) => {
             getPostById,
             addPost,
             deletePostById,
+            changeSortBy,
             isFormOpen,
             openModal,
             closeModal,

@@ -1,13 +1,15 @@
-import { Post } from '../../interfaces/posts';
+import { Post, sortBy } from '../../interfaces/posts';
 
 export interface PostsState {
     posts: Post[];
+    sortBy: sortBy;
 }
 
 type PostsAction =
     | { type: 'getPosts', payload: { posts: Post[] } }
     | { type: 'addPost', payload: { post: Post } }
     | { type: 'deletePostById', payload: { id: number } }
+    | { type: 'changeSortBy', payload: { sortBy: sortBy } }
 
 export const postsReducer = (state: PostsState, action: PostsAction): PostsState => {
     switch (action.type) {
@@ -27,6 +29,12 @@ export const postsReducer = (state: PostsState, action: PostsAction): PostsState
             return {
                 ...state,
                 posts: state.posts.filter(post => post.id !== action.payload.id)
+            }
+
+        case 'changeSortBy':
+            return {
+                ...state,
+                sortBy: action.payload.sortBy
             }
 
         default:
