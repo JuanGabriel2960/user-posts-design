@@ -12,4 +12,5 @@ export interface CreatePost {
 
 export interface searchParameters {
     title?: string;
+    body?: string;
 }

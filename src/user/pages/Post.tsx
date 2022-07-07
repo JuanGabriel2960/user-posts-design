@@ -44,7 +44,7 @@ export const Post = () => {
                 <NavLink to='/user/post'>
                     <FontAwesomeIcon icon={faAngleLeft} className='text-font-strong h-9 lg:h-11' />
                 </NavLink>
-                <IconButton onClick={handleDelete}>
+                <IconButton onClick={handleDelete} title='Delete Post'>
                     <FontAwesomeIcon icon={faTrash} className='h-5 lg:h-6' />
                 </IconButton>
             </div>

@@ -40,10 +40,10 @@ export const PostsProvider = ({ children }: any) => {
         getPosts();
     }, [])
 
-    const getPosts = async (searchParameters: searchParameters = { title: '' }) => {
+    const getPosts = async (searchParameters: searchParameters = { title: '', body: '' }) => {
         const { id } = user as User;
 
-        const resp = await http.get<Post[]>(`/users/${id}/posts?title=${searchParameters.title}`, {
+        const resp = await http.get<Post[]>(`/users/${id}/posts?title=${searchParameters.title}&body=${searchParameters.body}`, {
             headers: {
                 Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
             }
