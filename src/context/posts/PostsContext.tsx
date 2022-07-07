@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
-import { CreatePost, Post } from '../../interfaces/posts';
+import { CreatePost, Post, searchParameters } from '../../interfaces/posts';
 import http from '../../api/http';
 import { AuthContext } from '../auth/AuthContext';
 import { User } from '../../interfaces/users';
@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 type PostsContextProps = {
     posts: Post[];
-    getPosts: () => Promise<void>;
+    getPosts: (searchParameters?: searchParameters) => Promise<void>;
     getPostById: (id: string) => Promise<Post>;
     addPost: (formData: CreatePost) => Promise<void>;
     deletePostById: (id: number) => Promise<void>;
@@ -40,10 +40,10 @@ export const PostsProvider = ({ children }: any) => {
         getPosts();
     }, [])
 
-    const getPosts = async () => {
+    const getPosts = async (searchParameters: searchParameters = { title: '' }) => {
         const { id } = user as User;
 
-        const resp = await http.get<Post[]>(`/users/${id}/posts`, {
+        const resp = await http.get<Post[]>(`/users/${id}/posts?title=${searchParameters.title}`, {
             headers: {
                 Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
             }
@@ -127,7 +127,7 @@ export const PostsProvider = ({ children }: any) => {
             isFormOpen,
             openModal,
             closeModal,
-            isButtonLoading
+            isButtonLoading,
         }}>
             {children}
         </PostsContext.Provider>
