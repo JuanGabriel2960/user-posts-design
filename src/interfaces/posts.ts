@@ -14,3 +14,8 @@ export interface searchParameters {
     title?: string;
     body?: string;
 }
+
+export enum sortBy {
+    DESC = "DESC",
+    ASC = "ASC",
+}

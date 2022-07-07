@@ -7,11 +7,12 @@ import { PostForm } from '../components/PostForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPowerOff } from '@fortawesome/free-solid-svg-icons'
 import { AuthContext } from '../../context/auth/AuthContext';
+import { sortPosts } from '../../utils';
 
 export const Posts = () => {
 
   const { removeUser } = useContext(AuthContext);
-  const { posts } = useContext(PostsContext);
+  const { posts, sortBy } = useContext(PostsContext);
 
   return (
     <div>
@@ -20,7 +21,7 @@ export const Posts = () => {
 
       <div className='flex flex-wrap justify-center gap-4 md:gap-6 lg:gap-10'>
         {
-          posts.map(post => (
+          sortPosts(posts, sortBy).map(post => (
             <Card key={post.id} post={post}>
               <CardTitle className='lg:text-3xl mb-4' />
               <CardBody className='text-xl lg:text-2xl' />
